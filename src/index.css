@@ -1,4 +1,21 @@
 body {
-  color: #1ee0e0;
-  background-color: #120e26;
+  background-color: #fefefe;
+}
+
+.table {
+  border: 2px solid black;
+  width: 100vw;
+}
+
+.table tr {
+  width: 100%;
+}
+
+.table th {
+  width: 30%;
+  outline: 1px solid black;
+}
+
+.table img {
+  max-width: 30vw;
 }

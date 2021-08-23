@@ -6,6 +6,7 @@ const App = () => {
     { title: 'loading', img: 'loading', breed: 'loading' },
   ])
   const [search, setSearch] = useState('')
+  const [breed, setBreed] = useState('All')
 
   useEffect(() => {
     fetch('https://dogs-api-kandratsyeu.herokuapp.com')
@@ -21,13 +22,25 @@ const App = () => {
     <>
       <p>
         <label>Выбрать породу:</label>
-        <select>
+        <select
+          onChange={(e) => {
+            setBreed(e.target.value)
+          }}
+        >
+          <option value="All">Все</option>
           {data
-            .filter((el, ind) => {
-              data.indexOf(el) === ind
-            })
             .map((dog) => {
-              return <option key={dog.breed}>{dog.breed}</option>
+              return dog.breed
+            })
+            .filter((breed, index, arr) => {
+              return arr.indexOf(breed) === index
+            })
+            .map((breed, ind) => {
+              return (
+                <option value={breed} key={ind}>
+                  {breed}
+                </option>
+              )
             })}
         </select>
         <label>
@@ -45,13 +58,17 @@ const App = () => {
               <h3>Картинка</h3>
             </th>
             <th>
-              <h3>Порода</h3>
+              <h3>Порода{breed}</h3>
             </th>
           </tr>
         </thead>
         <tbody>
           {data
-            .filter((dog) => dog.title.includes(search))
+            .filter((dog) =>
+              breed === 'All'
+                ? dog.title.includes(search)
+                : dog.title.includes(search) && dog.breed === breed
+            )
             .map((dog, index) => {
               return (
                 <tr key={index}>
